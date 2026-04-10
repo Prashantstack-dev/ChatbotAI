@@ -1,8 +1,8 @@
 import "dotenv/config";
+import supabase from './supabase.js'
 import express from "express";
 import OpenAI from "openai";
 import cors from 'cors';
-
 // Create the app
 const app = express();
 //Create the AI modal

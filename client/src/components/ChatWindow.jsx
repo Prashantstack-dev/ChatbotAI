@@ -44,7 +44,8 @@ export default function ChatWindow() {
     <div>Loading...</div>
   ) : (
     <div>
-      Window is rendering:
+      <h2><strong>Start Chat:</strong></h2>
+      
       <ChatInput input={input} setInput={setInput} sendMessage={sendMessage}/>
       <ChatMessages messages={messages} isLoading={isLoading}/>
     </div>

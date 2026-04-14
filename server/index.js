@@ -188,14 +188,14 @@ app.post("/api/chat", async (req, res) => {
   }
 
   try {
-    // Step 1: Embed the user message using HuggingFace (free)
+    //  Embed the user message using HuggingFace (free)
     const rawVector = await hf.featureExtraction({
       model: "sentence-transformers/all-MiniLM-L6-v2",
       inputs: message,
     });
     const vector = rawVector.flat(); // flatten nested array
 
-    // Step 2: Find similar chunks in Supabase
+    // Find similar chunks in Supabase
     const { data, error } = await supabase.rpc("match_documents_local", {
       query_embedding: vector,
       match_threshold: 0.3, // lowered for better recall
@@ -204,7 +204,7 @@ app.post("/api/chat", async (req, res) => {
 
     if (error) throw error;
 
-    // Step 3: Build context from retrieved chunks
+    // Build context from retrieved chunks
     const context = data?.map((doc) => doc.content).join("\n\n") || "";
 
     // Fallback if nothing found in database
@@ -214,7 +214,7 @@ app.post("/api/chat", async (req, res) => {
       });
     }
 
-    // Step 4: Generate response using Groq (free, fast)
+    // Generate response using Groq (free)
     // Security: system prompt hardened against prompt injection
     const completion = await groq.chat.completions.create({
       model: "llama-3.3-70b-versatile",

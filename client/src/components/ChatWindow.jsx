@@ -1,11 +1,12 @@
 import { useState } from "react";
 import ChatInput from "./ChatInput";
 import ChatMessages from "./ChatMessages";
+import {chatStyles} from '../chatStyles'
+import { Loader } from 'lucide-react';
+import { Bot,Circle } from 'lucide-react';
 
-export default function ChatWindow() {
-  const [messages, setMessages] = useState([]);
-  const [input, setInput] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+export default function ChatWindow({messages, setMessages,input, setInput,isLoading, setIsLoading  }) {
+
 
   //input empty do nothing
     async function sendMessage() {
@@ -39,15 +40,33 @@ export default function ChatWindow() {
     }
   }
   
+  return (
+  <div className={chatStyles.chatPanel}>
+    <h2 className="flex gap-2">
+      <div>
+      <Bot className={chatStyles.bot}/>
+      </div>
+       AI Assistant
+       <div>
+       <Circle className={chatStyles.circle}/>
+       </div>
+       </h2>
 
-  return isLoading ? (
-    <div>Loading...</div>
-  ) : (
-    <div>
-      <h2><strong>Start Chat:</strong></h2>
-      
-      <ChatInput input={input} setInput={setInput} sendMessage={sendMessage}/>
-      <ChatMessages messages={messages} isLoading={isLoading}/>
-    </div>
-  );
+
+    {isLoading && (
+      <div className={chatStyles.assistantBubble}>
+        <Loader className="animate-spin w-4 h-4 inline-block mr-2" />
+        Thinking...
+      </div>
+    )}
+
+    <ChatMessages messages={messages} isLoading={isLoading} />
+
+    <ChatInput
+      input={input}
+      setInput={setInput}
+      sendMessage={sendMessage}
+    />
+  </div>
+);
 }

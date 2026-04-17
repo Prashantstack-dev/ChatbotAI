@@ -169,7 +169,7 @@ app.use(express.json());
 app.use(cors({ origin: process.env.CLIENT_URL }));
 
 //Health check 
-app.get("/", (req, res) => {
+app.get("/health", (req, res) => {
   res.json({ status: "ok" });
 });
 

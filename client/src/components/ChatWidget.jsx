@@ -10,6 +10,7 @@ export default function ChatWidget(){
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isOpen, setIsOpen]=useState(false);
+  const [isTyping, setIsTyping] = useState(false);
 
     function handleOpenChat(){
         //use previous value and give opposite of the value

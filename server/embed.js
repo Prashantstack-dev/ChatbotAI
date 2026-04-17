@@ -76,7 +76,7 @@ import supabase from "./supabase.js";
 const hf = new HfInference(process.env.HUGGINGFACE_API_KEY);
 
 // Read and chunk document
-const text = fs.readFileSync("./data/restaurant.txt", "utf8");
+const text = fs.readFileSync("./data/salon.txt", "utf8");
 const chunks = text
   .split(/\r?\n\r?\n/)
   .filter((chunk) => chunk.trim().length > 0);

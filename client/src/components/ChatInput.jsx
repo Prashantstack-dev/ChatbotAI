@@ -7,7 +7,7 @@ export default function ChatInput({input, setInput, sendMessage, savedValue}){
 
     <div className={chatStyles.inputContainer}>
         <input 
-        className={`chatStyles.input w-[90%]`}
+        className={`${chatStyles.input} w-full`}
         placeholder='Type a message ... '
         type='text' 
         value={input} 

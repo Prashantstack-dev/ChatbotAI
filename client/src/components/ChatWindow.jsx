@@ -1,9 +1,14 @@
-import { useState } from "react";
+console.log("ChatWindow mounted");
+
 import ChatInput from "./ChatInput";
 import ChatMessages from "./ChatMessages";
 import {chatStyles} from '../chatStyles'
 import { Loader } from 'lucide-react';
 import { Bot,Circle } from 'lucide-react';
+
+import StatusBadge from "./StatusBadge";
+import ChatContent from "./ChatContent"
+
 
 export default function ChatWindow({messages, setMessages,input, setInput,isLoading, setIsLoading  }) {
 
@@ -32,6 +37,7 @@ export default function ChatWindow({messages, setMessages,input, setInput,isLoad
         });
         const data = await response.json();
         console.log(data);
+
         setMessages(prevMessage=> [...prevMessage, {role:'assistant', content:data.reply} ])       
   }catch(error){
       console.error("Error connecting to AI agent:", error);
@@ -41,17 +47,21 @@ export default function ChatWindow({messages, setMessages,input, setInput,isLoad
   }
   
   return (
-  <div className={chatStyles.chatPanel}>
-    <h2 className="flex gap-2">
-      <div>
+    <div className={chatStyles.chatPanel}>
+    <header className="flex gap-3">
       <Bot className={chatStyles.bot}/>
-      </div>
-       AI Assistant
-       <div>
-       <Circle className={chatStyles.circle}/>
-       </div>
-       </h2>
+      <StatusBadge/>  
+    </header>
 
+   {/* 0 message then displayed Content */}
+   <div className="flex-1 overflow-y-auto">
+  <ChatContent
+    messages={messages}
+    isLoading={isLoading}
+  />
+</div>
+    
+ 
 
     {isLoading && (
       <div className={chatStyles.assistantBubble}>
@@ -60,7 +70,7 @@ export default function ChatWindow({messages, setMessages,input, setInput,isLoad
       </div>
     )}
 
-    <ChatMessages messages={messages} isLoading={isLoading} />
+    {/* <ChatMessages messages={messages} isLoading={isLoading} /> */}
 
     <ChatInput
       input={input}

@@ -86,8 +86,14 @@ Everything started working properly after the fixes — Tailwind styles are now 
 — Welcome message displays properly when chat is empty.Messages render correctly after user input
 
 
+ChatMessages = printer 🖨️
+It only prints what you give it.
 
-
+ChatWindow = brain 🧠
+It decides:
+when user is typing
+when AI is thinking
+when response arrives
 
 
 

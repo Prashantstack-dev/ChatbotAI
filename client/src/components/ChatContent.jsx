@@ -2,7 +2,7 @@
 import ChatMessages from "./ChatMessages";
 import { Bot } from "lucide-react";
 
-export default function ChatWelcome({ messages, isLoading }) {
+export default function ChatContent({ messages, isLoading }) {
   if (!messages || messages.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center h-full text-center px-4">
@@ -11,11 +11,11 @@ export default function ChatWelcome({ messages, isLoading }) {
         </div>
 
         <h3 className="font-semibold text-foreground mb-1">
-          Hi there!
+          Hi! Welcome to Kim Sun Young
         </h3>
 
         <p className="text-sm text-muted-foreground">
-          How can I help you today? Feel free to ask me anything.
+          I can help you book appointments, check prices, or choose a hairstyle. What would you like to do?
         </p>
       </div>
     );

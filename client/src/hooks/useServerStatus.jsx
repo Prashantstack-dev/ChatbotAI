@@ -9,7 +9,7 @@ export default function useServerStatus(){
 
     const checkServer = async () => {
         //Right before every server request, mark the UI as loading again
-        console.log("Checking server...");
+        // console.log("Checking server...");
         setLoading(true);
         try{
       const res = await fetch(`${import.meta.env.VITE_API_URL}/health`,{cache: 'no-cache'});
@@ -23,7 +23,7 @@ export default function useServerStatus(){
     };
     useEffect(()=>{
         checkServer();
-        const interval = setInterval(checkServer, 10000);
+        const interval = setInterval(checkServer, 10000); //fires every 10sec
         return ()=> clearInterval(interval);
     },[])
     return {isOnline,loading};

@@ -30,6 +30,7 @@ export default function ChatWidget() {
             isLoading={isLoading}
             setIsLoading={setIsLoading}
             setIsTyping={setIsTyping}
+            sessionId={sessionId}
             setSessionId={setSessionId}
           />
         )}

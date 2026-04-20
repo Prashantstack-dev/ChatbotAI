@@ -11,7 +11,7 @@ export default function ChatContent({ messages, isLoading }) {
         </div>
 
         <h3 className="font-semibold text-foreground mb-1">
-          Hi! Welcome to Kim Sun Young
+          Hi! Welcome to Salon Chat
         </h3>
 
         <p className="text-sm text-muted-foreground">

@@ -36,7 +36,7 @@ export default function ChatWindow({
 
     const loadMessages = async () => {
       const { data, error } = await supabase
-        .from("messages")
+        .from("chat_sessions") // Fixed: Backend saves to chat_sessions
         .select("*")
         .eq("session_id", sessionId)
         .order("created_at", { ascending: true });
@@ -58,12 +58,6 @@ export default function ChatWindow({
       };
       //    state = immutable so: old state → copy → modify → set new state also using “previous state” pattern to make it safer.
       setMessages((prevMessage) => [...prevMessage, userMessage]);
-      // save user message to Supabase
-      await supabase.from("messages").insert({
-        session_id: sessionId,
-        role: "user",
-        content: input
-      });
 
       setInput(""); //clears the input
       setIsLoading(true);
@@ -80,31 +74,25 @@ export default function ChatWindow({
         headers: {
           "Content-Type": "application/json" //tells Express to parse JSON body
         },
-        // body: JSON.stringify({
-        //   message: input
-        // })
-        // Data must be stringified
         body: JSON.stringify({
-          messages: history
+          message: input,
+          sessionId: sessionId
         })
       });
       const data = await response.json();
       // console.log(data);
 
+      if (!response.ok) {
+        throw new Error(data.error || "Failed to fetch AI response");
+      }
+
       //AFTER you get AI response
-      // setMessages(prevMessage=> [...prevMessage, {role:'assistant', content:data.reply} ])
-      const aiMessage = { role: "assistant", content: data.reply };
+      const aiMessage = { role: "assistant", content: data.reply || "Sorry, I couldn't generate a response." };
 
       setMessages((prev) => [...prev, aiMessage]);
-
-      // save AI message
-      await supabase.from("chat_sessions").insert({
-        session_id: sessionId,
-        role: "assistant",
-        content: data.reply
-      });
     } catch (error) {
       console.error("Error connecting to AI agent:", error);
+      setMessages((prev) => [...prev, { role: "assistant", content: `Error: ${error.message}` }]);
     } finally {
       setIsLoading(false);
     }

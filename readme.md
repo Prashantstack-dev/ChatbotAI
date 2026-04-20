@@ -1,4 +1,6 @@
-<img src="assets/screenshot.png" width="600" />
+## Demo
+
+![Screenshot](client/assets/screenshot.png)
 
 supabase.js
 add this console.log('Supabase connected: ', !!url && !!key); 

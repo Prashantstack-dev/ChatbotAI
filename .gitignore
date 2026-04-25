@@ -2,7 +2,8 @@
 node_modules/
 
 # Environment
-.env*
+.env
+.env.*
 client/.env*
 server/.env*
 

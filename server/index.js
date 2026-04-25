@@ -20,8 +20,15 @@ app.use('/api/chat', limiter)
 app.use(express.json());
 
 app.use(cors({
-  origin: process.env.VITE_CLIENT_URL || ["http://localhost:5173", "http://localhost:5174"]
+  origin: [
+    process.env.VITE_CLIENT_URL, // This handles  .env URL
+    "http://localhost:5173", 
+    "http://localhost:5174",  
+    "http://localhost:4173",     // This handles  Vite Preview
+    "https://chatbotai-idln.onrender.com"
+  ]
 }));
+
 
 //Health check 
 app.get("/health", (req, res) => {

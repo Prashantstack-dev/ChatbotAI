@@ -29,6 +29,7 @@ export async function handleChat(req, res) {
     const context = await runRAG(message);
 
     // 4. Generate AI response
+    // Safety fallback: If history exists, use it. Otherwise, use an empty list history || []
     const reply = await generateAIResponse(context, history || [], message);
 
     // 5. Save assistant reply to DB
@@ -36,6 +37,7 @@ export async function handleChat(req, res) {
       session_id: sessionId,
       role: "assistant",
       content: reply,
+      
     });
 
     res.json({ reply });

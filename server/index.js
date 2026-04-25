@@ -7,6 +7,21 @@ import {handleChat} from "./controllers/chatController.js"
 // Clients 
 const app = express();
 
+app.use(cors({
+  origin: [
+    process.env.VITE_CLIENT_URL, // This handles  .env URL
+    "http://localhost:5173", 
+    "http://localhost:5174",  
+    "http://localhost:4173",  
+    "https://chatbot-ai-xi-two.vercel.app",   // This handles  Vite Preview
+    "https://chatbot-ai-git-main-prashantstack-devs-projects.vercel.app",
+    "https://chatbotai-idln.onrender.com"
+  ]
+}));
+
+// Middleware (Body parser)
+app.use(express.json());
+
 // rate-limit
 const limiter = rateLimit({
   windowMs: 60 * 1000,  // 1 minute
@@ -15,21 +30,6 @@ const limiter = rateLimit({
 })
 
 app.use('/api/chat', limiter)
-
-// Middleware
-app.use(express.json());
-
-app.use(cors({
-  origin: [
-    process.env.VITE_CLIENT_URL, // This handles  .env URL
-    "http://localhost:5173", 
-    "http://localhost:5174",  
-    "http://localhost:4173",  
-    "https://chatbot-ai-xi-two.vercel.app/",   // This handles  Vite Preview
-    "https://chatbotai-idln.onrender.com"
-  ]
-}));
-
 
 //Health check 
 app.get("/health", (req, res) => {

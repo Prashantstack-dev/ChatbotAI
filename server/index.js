@@ -24,7 +24,8 @@ app.use(cors({
     process.env.VITE_CLIENT_URL, // This handles  .env URL
     "http://localhost:5173", 
     "http://localhost:5174",  
-    "http://localhost:4173",     // This handles  Vite Preview
+    "http://localhost:4173",  
+    "https://chatbot-ai-xi-two.vercel.app/",   // This handles  Vite Preview
     "https://chatbotai-idln.onrender.com"
   ]
 }));

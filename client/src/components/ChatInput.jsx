@@ -6,7 +6,6 @@ export default function ChatInput({
   input,
   setInput,
   sendMessage,
-  savedValue
 }) {
   return (
     <>

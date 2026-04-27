@@ -10,8 +10,8 @@ export default function ChatWidget() {
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  const [isTyping, setIsTyping] = useState(false);
-  const [sessionId, setSessionId] = useState(null); 
+
+  const [sessionId, setSessionId] = useState(null);
 
   function handleOpenChat() {
     //use previous value and give opposite of the value
@@ -21,19 +21,19 @@ export default function ChatWidget() {
     <>
       <div>
         <AnimatePresence>
-        {isOpen && (
-          <ChatWindow
-            messages={messages}
-            setMessages={setMessages}
-            input={input}
-            setInput={setInput}
-            isLoading={isLoading}
-            setIsLoading={setIsLoading}
-            setIsTyping={setIsTyping}
-            sessionId={sessionId}
-            setSessionId={setSessionId}
-          />
-        )}
+          {isOpen && (
+            <ChatWindow
+              messages={messages}
+              setMessages={setMessages}
+              input={input}
+              setInput={setInput}
+              isLoading={isLoading}
+              setIsLoading={setIsLoading}
+              sessionId={sessionId}
+              setSessionId={setSessionId}
+
+            />
+          )}
         </AnimatePresence>
 
         <button className={chatStyles.chatButton} onClick={handleOpenChat}>

@@ -19,7 +19,8 @@ export default function ChatWindow({
   isLoading,
   setIsLoading,
   sessionId,
-  setSessionId
+  setSessionId,
+  
 }) {
   //local storage for messages session Create / load session_id
   useEffect(() => {
@@ -67,7 +68,7 @@ export default function ChatWindow({
         role: m.role,
         content: m.content
       }));
-
+     
       //POST Request
       const response = await fetch(`${import.meta.env.VITE_API_URL}/api/chat`, {
         method: "POST",
@@ -94,6 +95,7 @@ export default function ChatWindow({
       console.error("Error connecting to AI agent:", error);
       setMessages((prev) => [...prev, { role: "assistant", content: `Error: ${error.message}` }]);
     } finally {
+      
       setIsLoading(false);
     }
   }
@@ -117,15 +119,6 @@ export default function ChatWindow({
       <div className='flex-1 overflow-y-auto'>
         <ChatContent messages={messages} isLoading={isLoading} />
       </div>
-
-      {isLoading && (
-        <div className={chatStyles.assistantBubble}>
-          <Loader className='animate-spin w-4 h-4 inline-block mr-2' />
-          Thinking...
-        </div>
-      )}
-
-      {/* <ChatMessages messages={messages} isLoading={isLoading} /> */}
 
       <ChatInput input={input} setInput={setInput} sendMessage={sendMessage} />
     </motion.div>

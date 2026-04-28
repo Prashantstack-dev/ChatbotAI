@@ -6,6 +6,10 @@ import { MessageCircle, X } from "lucide-react";
 import { AnimatePresence } from "framer-motion";
 
 export default function ChatWidget() {
+  const businessId =
+  new URLSearchParams(window.location.search).get('businessId') || "default";
+  console.log("Business:", businessId);
+
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -31,7 +35,7 @@ export default function ChatWidget() {
               setIsLoading={setIsLoading}
               sessionId={sessionId}
               setSessionId={setSessionId}
-
+              businessId={businessId}
             />
           )}
         </AnimatePresence>

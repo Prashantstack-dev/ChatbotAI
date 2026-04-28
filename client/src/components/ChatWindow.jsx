@@ -20,7 +20,7 @@ export default function ChatWindow({
   setIsLoading,
   sessionId,
   setSessionId,
-  
+  businessId
 }) {
   //local storage for messages session Create / load session_id
   useEffect(() => {

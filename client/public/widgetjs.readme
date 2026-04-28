@@ -1,0 +1,31 @@
+<script> defines business
+widget.js reads it
+iframe URL includes it
+React reads it
+API uses it
+
+
+//Used in API (automatic)
+body: JSON.stringify({
+  businessId,
+  message
+})
+** Whole flow in one line
+<script> → widget.js → iframe URL → React reads → API uses
+
+Where the data     is	How you read it
+HTML attribute	       .dataset
+URL query (?x=...)	   URLSearchParams
+Input field	           .value
+API response	         response.json()
+
+Step A — “Where is my data right now?”
+In <script> → must read from DOM
+Step B — “How do I read DOM attributes?”
+Google / recall: JS read data attribute
+→ .dataset
+Step C — “Where did I send it?”
+Into URL → ?businessId=...
+Step D — “How do I read URL params?”
+Google / recall: JS get query param
+→ URLSearchParams

@@ -4,7 +4,7 @@
 //   chatWidget: "fixed inset-0 pointer-events-none",
 //   // Chat button (floating)
 //   chatButton:
-//     "fixed bottom-7 right-6 w-14 h-14 rounded-full bg-gradient-to-br from-[#7F77DD] to-[#534AB7] flex items-center justify-center shadow-lg hover:scale-105 transition-transform cursor-pointer border-0",
+//     "fixed bottom-7 right-6 w-14 h-14 rounded-full bg-gradient-to-br from-[#7F77DD] to-[]#534AB7 flex items-center justify-center shadow-lg hover:scale-105 transition-transform cursor-pointer border-0",
 
 //   // Chat panel
 //   chatPanel:

@@ -1,6 +1,8 @@
 import { chatStyles } from "../chatStyles";
 import { SendHorizontal } from "lucide-react";
 import { motion } from "framer-motion";
+// Extracting motion.input to a constant to satisfy the linter and improve readability for the animated text field.
+const MotionInput = motion.input;
 
 export default function ChatInput({
   input,

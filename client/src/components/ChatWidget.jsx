@@ -5,8 +5,8 @@ import { MessageCircle, X } from "lucide-react";
 
 import { AnimatePresence } from "framer-motion";
 
-export default function ChatWidget() {
-  const businessId =
+export default function ChatWidget({businessId: businessIdProp}) {
+  const businessId = businessIdProp ||
   new URLSearchParams(window.location.search).get('businessId') || "default";
   console.log("Business:", businessId);
 
@@ -24,6 +24,7 @@ export default function ChatWidget() {
   return (
     <>
       <div>
+        <div>Salon for : {businessId}</div>
         <AnimatePresence>
           {isOpen && (
             <ChatWindow

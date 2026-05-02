@@ -26,7 +26,7 @@ import { runRAG } from '../services/ragService.js'
 
 describe('runRAG', () => {
   it('returns context string when documents found', async () => {
-    const result = await runRAG('What are your prices?')
+    const result = await runRAG('What are your prices?','mock-biz-id')
     expect(typeof result).toBe('string')
     expect(result.length).toBeGreaterThan(0)
     expect(result).toContain('Haircut prices')
@@ -37,7 +37,7 @@ describe('runRAG', () => {
     const supabase = await import('../supabase.js')
     supabase.default.rpc.mockResolvedValueOnce({ data: [], error: null })
 
-    const result = await runRAG('random unrelated question')
+    const result = await runRAG('random unrelated question','test-business-id')
     expect(result).toContain("don't have that exact information")
   })
 

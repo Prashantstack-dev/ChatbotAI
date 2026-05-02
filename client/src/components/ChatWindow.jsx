@@ -1,5 +1,6 @@
 import ChatInput from "./ChatInput";
 import ChatMessages from "./ChatMessages";
+import { ChatFooter } from "./ChatFooter";
 import { chatStyles } from "../chatStyles";
 import { Loader } from "lucide-react";
 import { Bot } from "lucide-react";
@@ -10,6 +11,8 @@ import ChatContent from "./ChatContent";
 import { useEffect } from "react";
 import { supabase } from "../supabaseClient";
 import { motion } from "framer-motion";
+ //Extracting motion.div to a constant to satisfy the linter and improve readability for the animated text field.
+const MotionDiv = motion.div
 
 export default function ChatWindow({
   messages,
@@ -30,7 +33,7 @@ export default function ChatWindow({
       localStorage.setItem("session_id", id);
     }
     setSessionId(id);
-  }, []);
+  }, [setSessionId]);
   //Load old messages from Supabase
   useEffect(() => {
     if (!sessionId) return;
@@ -47,7 +50,7 @@ export default function ChatWindow({
       }
     };
     loadMessages();
-  }, [sessionId]);
+  }, [sessionId, setMessages]);
 
   //input empty do nothing
   async function sendMessage() {
@@ -63,12 +66,6 @@ export default function ChatWindow({
       setInput(""); //clears the input
       setIsLoading(true);
 
-      // Add history
-      const history = [...messages, userMessage].slice(-8).map((m) => ({
-        role: m.role,
-        content: m.content
-      }));
-     
       //POST Request
       const response = await fetch(`${import.meta.env.VITE_API_URL}/api/chat`, {
         method: "POST",
@@ -77,7 +74,8 @@ export default function ChatWindow({
         },
         body: JSON.stringify({
           message: input,
-          sessionId: sessionId
+          sessionId: sessionId,
+          businessId: businessId
         })
       });
       const data = await response.json();
@@ -88,7 +86,7 @@ export default function ChatWindow({
       }
 
       //AFTER you get AI response
-      const aiMessage = { role: "assistant", content: data.reply || "Sorry, I couldn't generate a response." };
+      const aiMessage = { role: "assistant", content: data.reply || "Sorry, I couldn't generate a response. Please call or visit website for more info" };
 
       setMessages((prev) => [...prev, aiMessage]);
     } catch (error) {
@@ -121,6 +119,7 @@ export default function ChatWindow({
       </div>
 
       <ChatInput input={input} setInput={setInput} sendMessage={sendMessage} />
+      <ChatFooter />
     </motion.div>
   );
 }

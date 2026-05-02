@@ -200,7 +200,6 @@ function addWidget() {
   });
 
   // Script creates an iframe
- 
   const iframe = document.createElement("iframe");
 
   iframe.src =

@@ -151,22 +151,33 @@
 // addWidget();
 
 
+//Capture script befire async boundary
+const scriptTag = document.currentScript;
+
 // Wait until the HTML document is fully loaded and the DOM is ready.
 // This ensures that elements like document.body exist before we try to
 // append the widget (button + iframe), preventing null errors or missing UI.
+
+
 document.addEventListener("DOMContentLoaded", () => {
-  addWidget();
+  addWidget(scriptTag);
 });
 
-function addWidget() {
+function addWidget(scriptTag) {
    //Script reads that config 
-    const id = document.currentScript.dataset.businessId; 
+   // optional chaining acts like safety net so code doesn't crash if something doesn't exist(like null or undefined)
+    const id = scriptTag?.dataset?.businessId; 
 
+    if(!id){
+      console.log('Missing business ID')
+      return;
+    }
+    console.log(id);
   // CREATE BUTTON
 
   const button = document.createElement("button");
 
-  button.innerHTML = "👋";
+  button.innerHTML = "👋Widget";
 
   button.style.position = "fixed";
   button.style.right = "24px";
@@ -180,7 +191,7 @@ function addWidget() {
   button.style.fontSize = "22px";
   button.style.cursor = "pointer";
   button.style.boxShadow = "0 6px 20px #7F77DD";
-
+  button.style.zIndex = '999999';
   button.style.display = "flex";
   button.style.alignItems = "center";
   button.style.justifyContent = "center";
@@ -214,7 +225,7 @@ function addWidget() {
   iframe.style.borderRadius = "16px";
   iframe.style.boxShadow = "0 12px 40px #7F77DD";
   iframe.style.background = "white";
-
+  iframe.style.zIndex='999999';
   // hidden initially
   iframe.style.opacity = "0";
   iframe.style.transform = "translateY(20px) scale(0.95)";

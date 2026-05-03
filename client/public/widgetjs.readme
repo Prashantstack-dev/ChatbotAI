@@ -29,3 +29,25 @@ Into URL → ?businessId=...
 Step D — “How do I read URL params?”
 Google / recall: JS get query param
 → URLSearchParams
+
+***Making react app dynamic based on URL instead of hardcoding
+
+**This is in App.jsx 
+**useEffect(() => {
+  const params = new URLSearchParams(window.location.search);
+  const id = params.get("businessId");
+  console.log("Business ID:", id);
+  setBusinessId(id);
+}, []);
+
+//What each line does:
+
+window.location.search → gets the query string
+
+"?businessId=123"
+new URLSearchParams(...) → turns that into something readable
+
+params.get("businessId") → extracts:
+
+"123"
+setBusinessId(id) → saves it into React state

@@ -44,6 +44,8 @@ import useServerStatus from "../hooks/useServerStatus";
 
 import { motion } from "framer-motion";
 
+const MotionDiv = motion.div
+
 const StatusBadge = () => {
   const { isOnline, loading } = useServerStatus();
  

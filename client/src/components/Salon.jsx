@@ -3,7 +3,7 @@ import { Scissors, MapPin, Phone } from "lucide-react";
 export default function SalonDemoPage() {
   return (
     <div className="min-h-screen bg-white text-[#2c2a4a]">
-
+      
       {/* NAVBAR */}
       <nav className="flex justify-between items-center px-6 py-4 shadow-sm">
         <div className="flex items-center gap-2 font-bold text-[#7F77DD]">

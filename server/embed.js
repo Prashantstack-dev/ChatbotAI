@@ -76,7 +76,7 @@ import supabase from "./supabase.js";
 const hf = new HfInference(process.env.HUGGINGFACE_API_KEY);
 
 // Read and chunk document
-const text = fs.readFileSync("./data/salon.txt", "utf8");
+const text = fs.readFileSync("./data/KimData.txt", "utf8");
 const chunks = text
   .split(/\r?\n\r?\n/)
   .filter((chunk) => chunk.trim().length > 0);
@@ -84,7 +84,7 @@ const chunks = text
 console.log(`Found ${chunks.length} chunks to embed`);
 
 // Embed and store each chunk 
-async function embedDocuments() {
+async function embedDocuments({businessId}) {
   for (const chunk of chunks) {
     try {
       // Get embedding from HuggingFace
@@ -99,7 +99,8 @@ async function embedDocuments() {
       // Store in Supabase documents_local table
       const { error } = await supabase
         .from("documents_local")
-        .insert({ content: chunk, embedding: vector });
+        .insert({ content: chunk, embedding: vector, business_id:businessId  //Tag with business ID
+          });
 
       if (error) throw error;
 
@@ -109,7 +110,7 @@ async function embedDocuments() {
     }
   }
 
-  console.log("Done embedding all chunks.");
+  console.log(`Done embedding all chunks for ${businessId}.`);
 }
 
-embedDocuments();
+embedDocuments({businessId: "salon-sydney"});

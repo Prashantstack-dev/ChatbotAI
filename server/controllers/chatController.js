@@ -4,7 +4,7 @@ import supabase from "../supabase.js";
 
 export async function handleChat(req, res) {
   try {
-    const { message, sessionId } = req.body;
+    const { message, sessionId, businessId} = req.body;
 
     if (!message || !sessionId) {
       return res.status(400).json({ error: "Missing message or sessionId" });
@@ -26,7 +26,7 @@ export async function handleChat(req, res) {
     });
 
     // 3. Fetch RAG context
-    const context = await runRAG(message);
+    const context = await runRAG(message, businessId);
 
     // 4. Generate AI response
     // Safety fallback: If history exists, use it. Otherwise, use an empty list history || []
@@ -37,6 +37,7 @@ export async function handleChat(req, res) {
       session_id: sessionId,
       role: "assistant",
       content: reply,
+    
       
     });
 

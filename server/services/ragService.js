@@ -15,8 +15,8 @@ export async function runRAG(userMessage, businessId= null) {
   // Find similar chunks in Supabase
   const { data, error } = await supabase.rpc("match_documents_local", {
     query_embedding: vector,
-    match_threshold: 0.3, // lowered for better recall
-    match_count: 3,
+    match_threshold: 0.25, // slightly lower to catch related terms
+    match_count: 6, // increased context window so AI has more data to answer with
     filter_business_id: businessId || null //filter by business
   });
   

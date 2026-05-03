@@ -10,11 +10,12 @@ const app = express();
 app.use(cors({
   origin: function(origin, callback){
     //Allow requests with no origin (like mobile apps or curl request)
-    if(!origin)return
+    if(!origin) {
+      return
     callback(null,true);
-
+    }
     //Check if the origin is my production url or a vercel preview url
-    if(orign=== process.env.VITE_CLIENT_URL || origin.endswith('-prashantstack-devs-projects.vercel.app')){
+    if(origin=== process.env.VITE_CLIENT_URL || origin.endsWith('-prashantstack-devs-projects.vercel.app')){
       callback(null,true);
 
     }else{

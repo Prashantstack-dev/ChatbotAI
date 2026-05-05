@@ -1,5 +1,5 @@
 ## Demo
-ChatbotAI:[ https://track-spend-pro.vercel.app](https://chatbot-ai-git-main-prashantstack-devs-projects.vercel.app/)
+ChatbotAI: https://bit.ly/4d7iMAa
 ![Screenshot](client/assets/screenshot.png)
 
 supabase.js

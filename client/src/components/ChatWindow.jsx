@@ -7,8 +7,9 @@ import { Bot } from "lucide-react";
 
 import StatusBadge from "./StatusBadge";
 import ChatContent from "./ChatContent";
+import VoiceInput from './VoiceInput';
 
-import { useEffect } from "react";
+import { useEffect,useState } from "react";
 import { supabase } from "../supabaseClient";
 import { motion } from "framer-motion";
  //Extracting motion.div to a constant to satisfy the linter and improve readability for the animated text field.
@@ -23,8 +24,11 @@ export default function ChatWindow({
   setIsLoading,
   sessionId,
   setSessionId,
-  businessId
+  businessId,
+ 
 }) {
+const [selectedLanguage, setSelectedLanguage] = useState('en-US');
+
   //local storage for messages session Create / load session_id
   useEffect(() => {
     let id = localStorage.getItem("session_id");
@@ -117,7 +121,26 @@ export default function ChatWindow({
       <div className='flex-1 overflow-y-auto'>
         <ChatContent messages={messages} isLoading={isLoading} />
       </div>
+       {/* For voice input */}
+       <select 
+  value={selectedLanguage} 
+  onChange={(e) => setSelectedLanguage(e.target.value)}
+  className="mb-2 p-2 border rounded"
+>
+  <option value="en-US">English</option>
+  <option value="zh-CN">中文 (Mandarin)</option>
+  <option value="ko-KR">한국어 (Korean)</option>
+  <option value="ne-NP">नेपाली (Nepali)</option>
+</select>
 
+ {/* Add voice button next to text input: */}
+<VoiceInput 
+  language={selectedLanguage}
+  onTranscript={(text) => {
+    setInput(text); // Auto-fill the input box
+    // Optionally auto-submit
+  }}
+/>
       <ChatInput input={input} setInput={setInput} sendMessage={sendMessage} />
       <ChatFooter />
     </motion.div>

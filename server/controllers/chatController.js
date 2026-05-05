@@ -4,7 +4,7 @@ import supabase from "../supabase.js";
 
 export async function handleChat(req, res) {
   try {
-    const { message, sessionId, businessId} = req.body;
+    const { message, sessionId, businessId, language} = req.body;
 
     if (!message || !sessionId) {
       return res.status(400).json({ error: "Missing message or sessionId" });

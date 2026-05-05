@@ -2,7 +2,15 @@ import Groq from "groq-sdk";
 
 const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 
-export async function generateAIResponse(context, history, userMessage) {
+const systemPrompts = {
+  'en-US': 'You are a friendly assistant for Kim Sun Young Hair & Beauty.',
+  'zh-CN': '你是Kim Sun Young美发美容的友好助手。用中文回复客户。',
+  'ko-KR': '당신은 Kim Sun Young 헤어 & 뷰티의 친절한 도우미입니다. 한국어로 대답하세요.',
+  'ar-SA': 'أنت مساعد ودود لـ Kim Sun Young Hair & Beauty. أجب بالعربية.'
+};
+
+export async function generateAIResponse(context, history, userMessage,language= 'en-US') {
+  const systemPrompt = systemPrompts[language] || systemPrompts['en-US'];
   // Generate response using Groq (free)
   // Security: system prompt hardened against prompt injection
   const completion = await groq.chat.completions.create({
@@ -10,7 +18,7 @@ export async function generateAIResponse(context, history, userMessage) {
     messages: [
       {
         role: "system",
-        content: `You are a friendly support agent for Kim Sun Young Hair & Beauty
+        content: `You are a friendly support agent for Kim Sun Young Hair & Beauty Detect the user's language and respond in that language
 
 PERSONALITY:
 - Warm, helpful, and conversational—like a real person at the front desk

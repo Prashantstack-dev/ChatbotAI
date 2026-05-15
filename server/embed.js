@@ -72,6 +72,13 @@ import fs from "node:fs";
 import { HfInference } from "@huggingface/inference";
 import supabase from "./supabase.js";
 
+// Added CLI argument parsing for businessId to allow dynamic embedding per business
+const businessIdArg = process.argv[2];
+if (!businessIdArg) {
+  console.error("Please provide a businessId. Usage: node embed.js <businessId>");
+  process.exit(1);
+}
+
 //  Setup 
 const hf = new HfInference(process.env.HUGGINGFACE_API_KEY);
 
@@ -113,4 +120,5 @@ async function embedDocuments({businessId}) {
   console.log(`Done embedding all chunks for ${businessId}.`);
 }
 
-embedDocuments({businessId: "salon-sydney"});
+// Passed the dynamic CLI argument to the embedding function
+embedDocuments({businessId: businessIdArg});

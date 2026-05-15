@@ -18,7 +18,8 @@ export async function generateAIResponse(context, history, userMessage,language=
     messages: [
       {
         role: "system",
-        content: `You are a friendly support agent for Kim Sun Young Hair & Beauty Detect the user's language and respond in that language
+        // Dynamically injected systemPrompt based on the language
+        content: `${systemPrompt}
 
 PERSONALITY:
 - Warm, helpful, and conversational—like a real person at the front desk

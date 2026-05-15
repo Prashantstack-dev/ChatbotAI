@@ -47,6 +47,12 @@ app.get("/health", (req, res) => {
 //  what customers are asking
 app.get('/api/admin/conversations/:businessId', async (req, res) => {
   try {
+    // Added authentication check to protect the admin conversations route
+    const authHeader = req.headers.authorization;
+    if (!authHeader || authHeader !== `Bearer ${process.env.ADMIN_SECRET}`) {
+      return res.status(401).json({ error: "Unauthorized access" });
+    }
+
     const { businessId } = req.params;
 
     const { data, error } = await supabase

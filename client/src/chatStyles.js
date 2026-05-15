@@ -42,57 +42,57 @@
 // };
 
 export const chatStyles = {
-
   // Chat Widget
   chatWidget: "fixed inset-0 pointer-events-none",
 
-  // Floating Button (more aesthetic)
+  // Floating Button (Glassmorphism)
   chatButton:
-    "fixed bottom-7 right-6 w-14 h-14 rounded-full bg-black text-white flex items-center justify-center shadow-[0_8px_30px_rgba(0,0,0,0.25)] hover:scale-105 hover:shadow-[0_12px_40px_rgba(0,0,0,0.35)] transition-all cursor-pointer",
+    "fixed bottom-4 sm:bottom-7 right-4 sm:right-6 w-14 h-14 rounded-full bg-white/30 backdrop-blur-xl border border-white/50 text-[#7F77DD] flex items-center justify-center shadow-[0_8px_32px_rgba(31,38,135,0.15)] hover:scale-110 hover:bg-white/40 transition-all cursor-pointer z-50",
 
-  // Chat Panel (glass effect)
+  // Chat Panel (Premium Glassmorphism)
+  // CSS COMPOSITING: This glass effect relies on `backdrop-blur-2xl` and a semi-transparent 
+  // background (`bg-white/40`). For this to work, the parent iframe in `widget.js` MUST be 
+  // set to `background: transparent`, otherwise the blur has nothing to filter!
   chatPanel:
-    "fixed bottom-24 right-6 w-[360px] h-[520px] backdrop-blur-xl bg-white/70 border border-white/40 rounded-3xl shadow-[0_20px_60px_rgba(0,0,0,0.2)] flex flex-col overflow-hidden p-4",
+    "fixed bottom-20 sm:bottom-24 right-4 sm:right-6 w-[calc(100vw-32px)] sm:w-[360px] h-[600px] max-h-[80vh] z-50 backdrop-blur-2xl bg-white/40 border border-white/60 rounded-[2rem] shadow-[0_8px_32px_rgba(31,38,135,0.1)] flex flex-col overflow-hidden p-5",
 
-  // Header (MAKE THIS ACTUALLY A HEADER, not scroll area)
+  // Header 
   header:
-    "flex items-center justify-between pb-3 border-b border-black/10",
+    "flex items-center justify-between pb-4 mb-2 border-b border-white/40",
 
   // Message area
   messages:
-    "flex-1 overflow-y-auto space-y-4 py-2 pr-1",
+    "flex-1 overflow-y-auto space-y-4 py-2 pr-2",
 
-  // User bubble (clean + premium)
+  // User bubble 
   userBubble:
-    "bg-black text-white px-4 py-2.5 rounded-2xl rounded-br-sm text-sm leading-relaxed shadow-md",
+    "bg-gradient-to-br from-[#7F77DD] to-[#534AB7] text-white px-5 py-3 rounded-2xl rounded-br-sm text-sm leading-relaxed shadow-[0_4px_15px_rgba(127,119,221,0.3)]",
 
-  // Assistant bubble (soft luxury)
+  // Assistant bubble (glass)
   assistantBubble:
-    "bg-[#f7f6f3] text-[#1a1a1a] px-4 py-2.5 rounded-2xl rounded-bl-sm text-sm leading-relaxed border border-black/5",
+    "bg-white/60 backdrop-blur-md text-[#1a1a1a] px-5 py-3 rounded-2xl rounded-bl-sm text-sm leading-relaxed border border-white/50 shadow-sm",
 
-  // Chips (more minimal)
+  // Chips
   chip:
-    "px-3 py-1.5 rounded-full bg-black/5 text-black text-xs cursor-pointer hover:bg-black/10 transition",
+    "px-4 py-2 rounded-full bg-white/50 backdrop-blur-md border border-white/60 text-[#534AB7] text-xs cursor-pointer hover:bg-white/70 transition-all shadow-sm",
 
-  // Bot name / badge
+  // Bot name
   bot:
-    "text-black font-medium tracking-wide",
+    "text-[#2c2a4a] font-semibold text-lg tracking-tight",
 
-  // Status indicators (more subtle)
-  circleOn: "w-2.5 h-2.5 bg-green-400 rounded-full shadow-[0_0_6px_rgba(74,222,128,0.8)]",
+  // Status indicators
+  circleOn: "w-2.5 h-2.5 bg-green-400 rounded-full shadow-[0_0_8px_rgba(74,222,128,0.8)]",
   circleOff: "w-2.5 h-2.5 bg-gray-400 rounded-full",
 
-  // Input container (glass feel)
+  // Input container 
   inputContainer:
-  "flex items-center gap-2 w-full px-3 py-2 bg-white/80 backdrop-blur-xl border border-black/10 rounded-2xl ",
-
+    "flex items-center gap-2 w-full px-4 py-2 mt-2 bg-white/50 backdrop-blur-xl border border-white/60 rounded-2xl shadow-sm focus-within:shadow-md focus-within:bg-white/70 transition-all",
 
   // Input field
   input:
-  "flex-1 bg-transparent px-3 py-2 text-sm text-black placeholder:text-gray-400 focus:outline-none",
+    "flex-1 bg-transparent px-2 py-2 text-sm text-[#2c2a4a] placeholder:text-gray-500 focus:outline-none",
 
-
-  // Send button (minimal luxury)
+  // Send button 
   sendButton:
-  "flex items-center justify-center h-9 w-9 rounded-xl bg-black text-white hover:bg-black/80 active:scale-95 transition-all shrink-0 my-5 py-5 hover:scale-260",
+    "flex items-center justify-center h-10 w-10 rounded-xl bg-gradient-to-br from-[#7F77DD] to-[#534AB7] text-white hover:opacity-90 active:scale-95 transition-all shrink-0 shadow-md",
 };

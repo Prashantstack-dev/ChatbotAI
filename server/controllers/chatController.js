@@ -30,7 +30,8 @@ export async function handleChat(req, res) {
 
     // 4. Generate AI response
     // Safety fallback: If history exists, use it. Otherwise, use an empty list history || []
-    const reply = await generateAIResponse(context, history || [], message);
+    // Added language argument to pass the user's selected language
+    const reply = await generateAIResponse(context, history || [], message, language);
 
     // 5. Save assistant reply to DB
     await supabase.from("chat_sessions").insert({

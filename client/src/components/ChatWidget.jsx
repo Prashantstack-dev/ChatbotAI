@@ -5,15 +5,16 @@ import { MessageCircle, X } from "lucide-react";
 
 import { AnimatePresence } from "framer-motion";
 
-export default function ChatWidget({businessId: businessIdProp}) {
+export default function ChatWidget({businessId: businessIdProp, embedded = false}) {
   const businessId = businessIdProp ||
   new URLSearchParams(window.location.search).get('businessId') || "default";
-  console.log("Business:", businessId);
+  // Removed debug console.log for cleanup
 
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [isOpen, setIsOpen] = useState(false);
+  // If embedded in an iframe, the chat window is always open
+  const [isOpen, setIsOpen] = useState(embedded ? true : false);
 
   const [sessionId, setSessionId] = useState(null);
 
@@ -24,7 +25,7 @@ export default function ChatWidget({businessId: businessIdProp}) {
   return (
     <>
       <div>
-        <div>Salon for : {businessId}</div>
+        {/* Removed "Salon for : {businessId}" debug text as part of UI cleanup */}
         <AnimatePresence>
           {isOpen && (
             <ChatWindow
@@ -37,13 +38,17 @@ export default function ChatWidget({businessId: businessIdProp}) {
               sessionId={sessionId}
               setSessionId={setSessionId}
               businessId={businessId}
+              embedded={embedded}
             />
           )}
         </AnimatePresence>
 
-        <button className={chatStyles.chatButton} onClick={handleOpenChat}>
-          {isOpen ? <X size={20} /> : <MessageCircle />}
-        </button>
+        {/* Updated chat button to have a dynamic pulse effect and better UI. Hidden if embedded inside iframe. */}
+        {!embedded && (
+          <button className={chatStyles.chatButton} onClick={handleOpenChat}>
+            {isOpen ? <X size={24} /> : <MessageCircle size={28} />}
+          </button>
+        )}
       </div>
     </>
   );

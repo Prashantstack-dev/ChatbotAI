@@ -73,7 +73,8 @@ export default function SalonDemoPage() {
 
           <div className="flex items-center gap-2 justify-center">
             <Phone size={16} />
-            (02) 1234 5678
+            {/* Updated phone number to match backend data */}
+            0409 477 450
           </div>
 
         </div>

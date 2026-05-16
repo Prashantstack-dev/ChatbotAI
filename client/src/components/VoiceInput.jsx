@@ -1,41 +1,62 @@
-import { useState, useEffect } from 'react';
-import { Mic, MicOff } from 'lucide-react';
+// VoiceInput.jsx — custom hook for browser-native speech recognition.
+// No external APIs (Google Cloud, Azure) are used.
+// The browser's built-in webkitSpeechRecognition handles all transcription.
 
-export default function VoiceInput({ onTranscript, language = 'en-US' }) {
+import { useState, useEffect, useRef, useCallback } from 'react';
+
+// useVoiceInput — accepts:
+//   onTranscript : callback that receives the recognised text string
+//   language     : BCP-47 language tag (e.g. 'en-US', 'zh-CN') from the dropdown
+// Returns: { isListening, toggleListening }
+export function useVoiceInput(onTranscript, language = 'en-US') {
   const [isListening, setIsListening] = useState(false);
   const [recognition, setRecognition] = useState(null);
 
+  // Keep a ref to the callback so the recognition effect doesn't
+  // re-run on every render just because the function reference changes.
+  const onTranscriptRef = useRef(onTranscript);
   useEffect(() => {
-    // Check if browser supports speech recognition
+    onTranscriptRef.current = onTranscript;
+  }, [onTranscript]);
+
+  // Re-create the SpeechRecognition instance whenever the selected language changes.
+  // This is the key wiring between the header dropdown and the mic button.
+  useEffect(() => {
+    // Guard: webkitSpeechRecognition is supported in Chrome, Edge and Safari.
     if (!('webkitSpeechRecognition' in window)) {
-      alert('Voice input not supported in this browser. Use Chrome.');
+      console.warn('Voice input requires Chrome, Edge or Safari.');
       return;
     }
 
-    const SpeechRecognition = window.webkitSpeechRecognition;
-    const recog = new SpeechRecognition();
-    
-    recog.continuous = false; // Stop after one sentence
-    recog.interimResults = false;
-    recog.lang = language; // 'en-US', 'zh-CN', 'ko-KR', 'ar-SA'
+    const recog = new window.webkitSpeechRecognition();
+    recog.continuous = false;     // Capture one utterance then stop
+    recog.interimResults = false; // Only return the final confirmed transcript
 
+    // Language comes from the user's dropdown selection — no auto-detection needed.
+    recog.lang = language;
+
+    // Fill the textarea with the recognised text
     recog.onresult = (event) => {
       const transcript = event.results[0][0].transcript;
-      onTranscript(transcript); // Send to parent component
+      onTranscriptRef.current(transcript);
       setIsListening(false);
     };
 
+    // Reset on any recognition error (e.g. no mic permission, timeout)
     recog.onerror = (event) => {
       console.error('Speech recognition error:', event.error);
       setIsListening(false);
     };
 
+    // Reset when recognition ends naturally (silence timeout, etc.)
+    recog.onend = () => setIsListening(false);
+
     setRecognition(recog);
-  }, [language]);
+  }, [language]); // Re-init only when the selected language changes
 
-  const toggleListening = () => {
+  // Toggle function returned to ChatInput to wire to the mic button
+  const toggleListening = useCallback(() => {
     if (!recognition) return;
-
     if (isListening) {
       recognition.stop();
       setIsListening(false);
@@ -43,28 +64,7 @@ export default function VoiceInput({ onTranscript, language = 'en-US' }) {
       recognition.start();
       setIsListening(true);
     }
-  };
+  }, [recognition, isListening]);
 
-  return (
-    <>
-    <button
-      onClick={toggleListening}
-      className={`p-3 rounded-full ${
-        isListening ? 'bg-red-500 animate-pulse' : 'bg-blue-500'
-      }`}
-    >
-      {isListening ? <MicOff size={20} /> : <Mic size={20} />}
-    </button>
-
-    {/* When user speaks, show listening animation */}
-{isListening && (
-  <div className="flex items-center gap-2 text-blue-500">
-    <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce" />
-    <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce delay-100" />
-    <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce delay-200" />
-    <span>Listening...</span>
-  </div>
-)}
-      </>
-  );
+  return { isListening, toggleListening };
 }
